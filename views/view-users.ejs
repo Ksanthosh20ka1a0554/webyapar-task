@@ -11,10 +11,10 @@
     </style>
 </head>
 <body class="p-4">
-    <a href="/admin/dashboard" class="btn btn-primary btn-lg">Back</a>
-    <div class="container text-center">
+    <a href="/admin/dashboard" class="btn btn-outline-primary btn-lg">Back</a>
+    <div class="container text-center d-none d-lg-block">
         <% if (users && users.length > 0) { %>
-            <table class="table table-striped">
+            <table class="table">
                 <thead>
                     <tr>
                         <th class="p-4">User ID</th>
@@ -39,7 +39,7 @@
                                 <% if (user.name!=" " && user.status=="pending") { %>
                                     <a href="/admin/update/<%= user.userId %>" class="btn btn-primary">Done</a>
                                 <% } %>
-                                <a href="/admin/delete/<%= user.userId %>" class="btn btn-primary">Delete</a>
+                                <a href="/admin/delete/<%= user.userId %>" class="btn btn-outline-primary">Delete</a>
                             </td>
                         </tr>
                     <% }); %>
@@ -49,21 +49,40 @@
             <p>No users available</p>
         <% } %>
 
-       
-        
     </div>
-    
-    <script>
-       
-        function markDone(userId) {
-            
-            console.log(`Marking user ${userId} as done`);
-        }
-
-        function deleteUser(userId) {
-            
-            console.log(`Deleting user ${userId}`);
-        }
-    </script>
+    <% if (users && users.length > 0) { %>
+        <% users.forEach(user => { %>
+    <div class="container bg-light d-lg-none">
+        <div class="row border border-dark rounded" style="background: #EAECFF;border: 30px solid;">
+            <div class="col p-4">
+                <p class="text-end font-weight-light">Userid: <%= user.userId %></p>
+            </div>
+            <div class="vr"></div>
+            <div class="col p-4">
+                <p>Name : <%= user.name %></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex p-4">
+                <h4>photo:</h4>
+                <% if (user.profileImage) { %>
+                    <img class="ms-2" src="data:image/jpeg;base64,<%= user.profileImage.toString('base64') %>" alt="User Photo" style="max-width: 100px;">
+                <% } else if(user.profileImage==""){ %>
+                    <img class="ms-2" src="/public/images/blank-profile.jpg" alt="Blank Photo" style="max-width: 80px;">
+                <% } %>
+            </div>
+            <div class="col text-center p-4">
+                <h4 class="">Actions</h4>
+                <% if (user.name!=" " && user.status=="pending") { %>
+                    <a href="/admin/update/<%= user.userId %>" class="btn btn-primary">Done</a>
+                <% } %>
+                <a href="/admin/delete/<%= user.userId %>" class="btn btn-outline-primary">Delete</a>
+            </div>
+        </div>
+    </div>
+    <% }); %>
+    <% } else { %>
+        <p>No users available</p>
+    <% } %>
 </body>
 </html>

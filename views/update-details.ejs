@@ -37,25 +37,50 @@
         .image-upload-container {
             margin-top: 20px;
         }
+        @media only screen and (min-width: 321px) and (max-width: 480px) {
+            .slider-bar {
+                right: 0;
+                width: 100%;
+                height: 100%;
+            width: 100%;
+            }
+
+            .container {
+                margin-top: 15px;
+                padding: 10px;
+            }
+
+            .close-slider {
+                right: 5%;
+            }
+
+            #cropperImage {
+                max-width: 100%;
+            }
+        }
+        
     </style>
 </head>
 <body>
     <button id="viewSliderBtn" class="btn btn-outline-primary mt-5 me-5" style="float: right;">View</button>
-    <div class="container d-flex align-items-center justify-content-center vh-100">
-        <div>
-        <h2>Update Details</h2>
+    <div class="container d-lg-flex align-items-center justify-content-center vh-100">
+        <div class="">
+        <h1 class="text-center">Update Details</h1>
         <% if (user) { %>
-            <form method="post" action="/user/update-details">
+            <form class="container" method="post" action="/user/update-details">
                
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                     <label for="name" class="form-label">Name:</label>
                     <input type="text" class="form-control" id="name" name="name" value="<%= user.name %>" required>
                 </div>
 
                 
                 <div class="image-upload-container">
-                    <label for="profileImage" class="form-label">Upload Profile Picture:</label>
-                    <input type="file" class="form-control" id="profileImage" name="profileImage" accept="image/*" required>
+                    <label for="profileImage" class="form-label">Photo</label>
+                    <div class="p-5 bg-light text-center" style="border-style: dotted;">
+                        <img id="uploadimage" onclick="upload()" src="/public/images/Upload-removebg-preview.png" style="width: 150px;">
+                    </div>
+                    <input type="file" class="form-control d-none" id="profileImage" name="profileImage" accept="image/*" required>
                     <div id="imagePreview" class="mt-2" style="max-width: 30%;">
                         
                         <img id="cropperImage" style="max-width: 100%;" />
@@ -92,6 +117,9 @@
 
             
             <script>
+                function upload(){
+                    document.getElementById('profileImage').click();
+                }
                 function openSlider() {
                     document.getElementById('sliderBar').style.right = '0';
                 }
